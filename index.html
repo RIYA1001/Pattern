@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pattern</title>
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="container">
+    <canvas></canvas>
+  </div>
+
+</body>
+
+
+<script>
+
+  var t = 0;
+  var c = document.querySelector("canvas");
+  var $ = c.getContext('2d');
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+
+  window.addEventListener('resize', function () {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+  }, false);
+
+  function draw() {
+    $.globalCompositeOperation = 'source-over';
+    $.fillStyle = 'hsla(1,0%,0%,0.1)';
+    $.fillRect(1, 1, c.width, c.height);
+    var foo, i, j, r;
+    foo = Math.sin(t) * 4 * Math.PI;
+    for (i = 0; i < 250; ++i) {
+      r = 250 * Math.sin(i * foo);
+      $.fillStyle = 'hsla(' + i + 12 + ',100%, 60%,1)';
+      $.beginPath();
+      $.arc(Math.sin(i) * r + (c.width / 2),
+        Math.cos(i) * r + (c.height / 2),
+        1.5, 0, Math.PI * 2);
+      $.fill();
+
+    }
+    t += 0.000005;
+    return t %= 2 * Math.PI;
+  };
+
+  function run() {
+    window.requestAnimationFrame(run);
+    draw();
+  }
+  run();
+
+</script>
+
+</html>
